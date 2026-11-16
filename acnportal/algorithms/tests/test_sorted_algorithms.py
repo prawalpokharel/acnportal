@@ -501,6 +501,22 @@ class TestThirtyStationsRR(TestThirtyStationsBase):
         super().setUp()
         self.algo = RoundRobin(first_come_first_served)
 
+class TestTwoStationsDependencyCriticality(TestTwoStationsBase):
+    # noinspection PyMissingOrEmptyDocstring
+    def setUp(self) -> None:
+        super().setUp()
+        self.algo = SortedSchedulingAlgo(
+            DependencyCriticalitySort(criticality={"1": 1.0})
+        )
+
+
+class TestThirtyStationsDependencyCriticality(TestThirtyStationsBase):
+    # noinspection PyMissingOrEmptyDocstring
+    def setUp(self) -> None:
+        super().setUp()
+        self.algo = SortedSchedulingAlgo(DependencyCriticalitySort())
+
+
 class TestEarliestDeadlineFirstOrder(unittest.TestCase):
     def test_estimated_departure_matches_real(self):
         interface = two_station(limit=100, continuous=True, session_max_rate=32, estimated_departure=[11, 12])
